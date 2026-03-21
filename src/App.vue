@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
       <div class="shell header-bar">
         <a class="brand" href="#top" @click="closeMenu">
           <span class="brand-icon">M</span>
-          <span class="brand-text">Meally: gestione menu</span>
+          <span class="brand-text">Sepe</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary">

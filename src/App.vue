@@ -203,8 +203,8 @@ onBeforeUnmount(() => {
     <header class="site-header">
       <div class="shell header-bar">
         <a class="brand" href="#top" @click="closeMenu">
-          <span class="brand-icon">MS</span>
-          <span class="brand-text">MenuSmart</span>
+          <span class="brand-icon">M</span>
+          <span class="brand-text">Meally: gestione menu</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary">
@@ -498,8 +498,8 @@ onBeforeUnmount(() => {
       <div class="shell footer-grid">
         <section class="footer-brand">
           <a class="brand" href="#top">
-            <span class="brand-icon">MS</span>
-            <span class="brand-text">MenuSmart</span>
+            <span class="brand-icon">M</span>
+            <span class="brand-text">Meally: gestione menu</span>
           </a>
           <p>
             La piattaforma completa per digitalizzare il ristorante e gestire menu e ordini online
@@ -541,7 +541,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="shell footer-bottom">
-        <p>© 2026 MenuSmart. Tutti i diritti riservati.</p>
+        <p>© 2026 Meally: gestione menu. Tutti i diritti riservati.</p>
         <div>
           <a href="#top">Privacy Policy</a>
           <a href="#top">Termini di Servizio</a>

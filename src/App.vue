@@ -212,8 +212,19 @@ onBeforeUnmount(() => {
           <a class="header-cta" href="#cta">Prova Gratis</a>
         </nav>
 
-        <button class="menu-toggle" type="button" @click="isMenuOpen = !isMenuOpen">
-          <span>{{ isMenuOpen ? 'Chiudi' : 'Menu' }}</span>
+        <button
+          class="menu-toggle"
+          type="button"
+          :class="{ 'is-open': isMenuOpen }"
+          :aria-expanded="isMenuOpen"
+          :aria-label="isMenuOpen ? 'Chiudi menu' : 'Apri menu'"
+          @click="isMenuOpen = !isMenuOpen"
+        >
+          <span class="menu-toggle-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
         </button>
       </div>
 

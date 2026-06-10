@@ -1,8 +1,14 @@
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import TrialRegistration from './components/TrialRegistration.vue'
+import Login from './components/Login.vue'
+import Dashboard from './components/Dashboard.vue'
+import UserMenuPage from './components/UserMenuPage.vue'
+import RestaurantMenuPage from './components/RestaurantMenuPage.vue'
 
 const isMenuOpen = ref(false)
 const openFaq = ref(null)
+const currentHash = ref(window.location.hash)
 
 const navItems = [
   { label: 'Funzionalita', href: '#features' },
@@ -162,6 +168,14 @@ const footerColumns = [
   },
 ]
 
+const hashRoute = computed(() => (currentHash.value || '').split('?')[0] || '')
+
+const isTrialPage = computed(() => hashRoute.value === '#trial')
+const isLoginPage = computed(() => hashRoute.value === '#login')
+const isDashboardPage = computed(() => hashRoute.value === '#dashboard')
+const isUserMenuPage = computed(() => hashRoute.value === '#menu-utente')
+const isRestaurantMenuPage = computed(() => hashRoute.value === '#menu-ristorante')
+
 let observer
 
 const closeMenu = () => {
@@ -173,6 +187,12 @@ const toggleFaq = (index) => {
 }
 
 onMounted(() => {
+  const handleHashChange = () => {
+    currentHash.value = window.location.hash
+  }
+  
+  window.addEventListener('hashchange', handleHashChange)
+
   const animatedNodes = document.querySelectorAll('[data-animate]')
 
   observer = new IntersectionObserver(
@@ -191,6 +211,10 @@ onMounted(() => {
   )
 
   animatedNodes.forEach((node) => observer.observe(node))
+  
+  return () => {
+    window.removeEventListener('hashchange', handleHashChange)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -199,7 +223,12 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="landing-page">
+  <RestaurantMenuPage v-if="isRestaurantMenuPage" />
+  <UserMenuPage v-else-if="isUserMenuPage" />
+  <Dashboard v-else-if="isDashboardPage" />
+  <Login v-else-if="isLoginPage" />
+  <TrialRegistration v-else-if="isTrialPage" />
+  <div v-else class="landing-page">
     <header class="site-header">
       <div class="shell header-bar">
         <a class="brand" href="#top" @click="closeMenu">
@@ -209,7 +238,7 @@ onBeforeUnmount(() => {
 
         <nav class="desktop-nav" aria-label="Primary">
           <a v-for="item in navItems" :key="item.href" :href="item.href">{{ item.label }}</a>
-          <a class="header-cta" href="#cta">Prova Gratis</a>
+          <a class="header-cta" href="#trial">Prova Gratis</a>
         </nav>
 
         <button
@@ -234,7 +263,7 @@ onBeforeUnmount(() => {
             <a v-for="item in navItems" :key="`mobile-${item.href}`" :href="item.href" @click="closeMenu">
               {{ item.label }}
             </a>
-            <a class="header-cta" href="#cta" @click="closeMenu">Prova Gratis</a>
+            <a class="header-cta" href="#trial" @click="closeMenu">Prova Gratis</a>
           </nav>
         </div>
       </Transition>
@@ -256,7 +285,7 @@ onBeforeUnmount(() => {
             </p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#cta">Prova Gratis Ora</a>
+              <a class="button button-primary" href="#trial">Prova Gratis Ora</a>
               <a class="button button-secondary" href="#features">Scopri le Funzionalita</a>
             </div>
 
@@ -492,7 +521,7 @@ onBeforeUnmount(() => {
           </p>
 
           <div class="cta-actions">
-            <a class="button cta-primary" href="#top">Prova Gratis per 14 Giorni</a>
+            <a class="button cta-primary" href="#trial">Prova Gratis per 14 Giorni</a>
             <a class="button cta-secondary" href="#faq">Richiedi una Demo</a>
           </div>
 
@@ -561,4 +590,4 @@ onBeforeUnmount(() => {
       </div>
     </footer>
   </div>
-</template>
+  </template>
